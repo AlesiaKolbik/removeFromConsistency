@@ -5,54 +5,41 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите размер массива:");
-        int size = scanner.nextInt();
-        int[] sequence = new int[size];
-        System.out.println("Заполните массив:");
-        for (int i = 0; i < sequence.length; i++) {
-            sequence[i] = scanner.nextInt();
-        }
-        sequence = removeTheSameNumbers(sequence);
+        int [] sequence=fillArray();
         print(sequence);
     }
 
-    private static void print(int[] array) {
+    public static int[] fillArray() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите размер массива:");
+        int size = scanner.nextInt();
+        int[] array = new int[size];
+        System.out.println("Заполните массив:");
         for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + " ");
+            array[i] = scanner.nextInt();
+            }
+        return array;
+    }
+
+    public static void print(int[] array) {
+        int[] newArray = removeTheSameNumbers(array);
+        for (int i = 0; i < newArray.length; i++) {
+            if(newArray[i] != 0) {
+                System.out.print(newArray[i] + " ");
+            }
         }
     }
 
     private static int[] removeTheSameNumbers(int[] array) {
-        int index = 0;
+        int index = 1;
         int[] newArray = new int[array.length];
-        for (int i = 0; i < array.length-1; i++) {
-            if (array[i] != array[i + 1]) {
+        newArray[0]=array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] != array[i - 1]) {
                 newArray[index] = array[i];
                 index++;
-                if (i+1== array.length - 1)
-                    newArray[index] = array[i + 1];
             }
         }
-        newArray=removeNullIndexes(newArray);
         return newArray;
-    }
-
-    private static int [] removeNullIndexes(int[] array) {
-        int index = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == 0) {
-                index = i;
-                break;
-            }
-        }
-        if (index != 0) {
-            int[] newArray = new int[index];
-            for (int i = 0; i < newArray.length; i++) {
-                newArray[i] = array[i];
-            }
-            array=newArray;
-        }
-        return array;
     }
 }
